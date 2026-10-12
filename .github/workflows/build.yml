@@ -39,4 +39,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release already published; verified build remains available as an Actions artifact."
+            exit 0
+          fi
           gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --prerelease --title "Android File Transfer ARM $GITHUB_REF_NAME" --notes "Native arm64 preview with MTP USB 3 support, ADB Shell and Fastboot. Ad-hoc signed; not notarized. Real-device throughput, flashing and macOS 28 remain unverified. See README for setup and limits." dist/*.zip dist/SHA256SUMS.txt
