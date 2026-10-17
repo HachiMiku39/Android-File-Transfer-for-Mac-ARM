@@ -39,8 +39,42 @@ Native arm64 Android USB file transfer for macOS, with bundled ADB and Fastboot.
 - “兼容模式”恢复 16 KiB，切换时重开连接。遇到手机传输失败可启用它。
 - **未声称达到 USB 3 标称速率。** 5 Gbps 是链路速率，不是文件吞吐量；手机 MTP
   服务、存储、USB 端口及线材都会限制速度。USB-C 外形不代表支持 USB 3。
-- 大块路径目前处于预览，尚未有真实 Android 设备的吞吐量和 SHA-256 往返验证。
-  下面的测试表会明确记录已验证与待验证项目。
+- 已完成下述 Xiaomi 15 Ultra 的 1 GiB 实机吞吐量及 SHA-256 往返验证。
+  大块路径仍为预览；其他机型、USB 2 对照及兼容模式吞吐量尚待验证。
+
+### 实机测试（2026-10-17）
+
+Xiaomi 15 Ultra（25019PNF3C），Android 16；经 USB 3 Hub，系统报告协商链路
+**10 Gbps**。样本为 **1 GiB（1,073,741,824 字节）**，测试数据位于手机下载目录
+的专用子目录。下表 MB/s 均采用十进制单位。
+
+| 测试 | 结果 | 测量范围 |
+|---|---:|---|
+| USB MTP 上传：Mac → 手机 | **577.27 MB/s** | 单次 1 GiB，1.860 秒 |
+| USB MTP 下载：手机 → Mac | **437.72 MB/s** | 单次 1 GiB，2.453 秒 |
+| 手机内部顺序读取 | 631.77 MB/s | 1 MiB 块，下载目录文件系统 |
+| 手机内部顺序写入 | 259.45 MB/s | 1 MiB 块，包含末尾 fsync |
+| 手机内部 4 KiB 随机读取 | 944.95 MB/s，230,701 IOPS | Q1T1，**缓存影响无法排除** |
+| 手机内部 4 KiB 随机同步写入 | **79.29 MB/s，19,359 IOPS** | Q1T1，O_DSYNC |
+
+**校验通过：**原始文件、手机文件、下载副本的 SHA-256 完全一致。
+应用内 ADB 刷新与 `adb shell getprop ro.product.model` 也已通过，返回型号
+`25019PNF3C`，退出码 0。
+
+MTP 数据来自使用发布版同一 C 桥接代码与动态库的测试程序，未覆盖 GUI 的全部
+传输交互。这是单设备、单次短样本，不能外推到所有手机或长时间持续吞吐。
+手机内部读写与 USB 传输分开测量；下载目录经过 Android emulated storage/FUSE，
+即使调用者保留 O_DIRECT，也不能证明底层完全绕过缓存，**不将 4K 读取结果
+作为 UFS 裸性能结论**。
+
+[详细报告](docs/benchmarks/2026-10-17/android-device-test-report.txt) ·
+[原始数值与计算结果](docs/benchmarks/2026-10-17/android-device-test-results.json) ·
+[测量工具源码](docs/benchmarks/2026-10-17/phone-bench.c)
+
+现场发现旧版 Google Android File Transfer 会独占 MTP；退出旧版主程序后传输
+成功。libmtp 的设备库将此 USB ID 显示为 Mi-2s，实际机型由 USB/ADB 确认为
+Xiaomi 15 Ultra。测试后手机曾回到仅 ADB 模式，此时需要重新选择文件传输才能
+使用 MTP。刷机、解锁、擦除、重启均未测试。
 
 ## ADB Shell / Fastboot
 
@@ -94,9 +128,11 @@ libmtp / libusb，不改写系统库或 Google 旧版应用。
 | 内置 adb / fastboot 可运行并输出版本 | 自动验证 |
 | 参数解析、设备绑定、路径穿越防护、USB 速度标签 | 自动验证 |
 | MTP 检测无设备时正常返回 | 自动验证 |
-| 真实手机 MTP 上传 / 下载、>4 GB、拔线 / 取消 | 待实机验证 |
-| USB 3 吞吐量与 SHA-256 往返一致性 | 待实机验证 |
-| ADB 授权、Shell 与机型特定 Fastboot 操作 | 待实机验证 |
+| Xiaomi 15 Ultra 1 GiB MTP 后端上传 / 下载 | 2026-10-17 实机通过；未覆盖全部 GUI 交互 |
+| USB 3 吞吐量与 SHA-256 往返一致性 | 单设备 1 GiB 样本通过，见上方结果 |
+| ADB 授权、应用内设备刷新及 Shell 型号查询 | 2026-10-17 实机通过 |
+| >4 GiB、拔线 / 取消、其他机型及 USB 2 / 兼容模式对照 | 待实机验证 |
+| Fastboot 刷机、解锁、擦除和重启 | 按测试范围未执行 |
 | macOS 28 | 尚未发布，待验证 |
 
 实机测试建议：记录 Mac/系统、手机、线材和协商速度；分别用 USB 2、USB 3 与

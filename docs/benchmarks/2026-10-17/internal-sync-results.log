@@ -1,0 +1,8 @@
+open_flags=233474
+fadvise_dontneed_errno=0
+mode=3
+bytes=1073741824
+operations=262144
+elapsed_ns=13541315151
+fsync_ns=752188
+elapsed_including_fsync_ns=13542067339

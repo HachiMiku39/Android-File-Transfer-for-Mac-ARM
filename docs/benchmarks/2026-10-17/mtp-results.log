@@ -1,0 +1,5 @@
+Device 0 (VID=2717 and PID=ff48) is a Xiaomi Mi-2s (MTP).
+MTP_COUNT=1 USB_SPEED_ENUM=5
+Device 0 (VID=2717 and PID=ff48) is a Xiaomi Mi-2s (MTP).
+Android device detected, assigning default bug flags
+RESULT_JSON={"bytes":1073741824,"usb_speed_enum":5,"upload_seconds":1.860040,"upload_MBps":577.268,"download_seconds":2.453057,"download_MBps":437.716,"remote_folder":"/sdcard/Download/AFT-Test-20261017-2150"}
