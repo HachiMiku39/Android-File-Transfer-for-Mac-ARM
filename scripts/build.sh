@@ -2,6 +2,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
+./scripts/build-icon.sh
 ./scripts/build-deps.sh
 # Stage outside cloud-synced folders: file providers may reattach FinderInfo
 # during signing even immediately after xattr removal.
@@ -36,6 +37,7 @@ done < <(find "$APP" -type f -print0)
 cp .build/licenses/* "$APP/Contents/Resources/licenses/"
 cp LICENSE THIRD_PARTY_NOTICES.md "$APP/Contents/Resources/licenses/"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
+cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 xattr -cr "$APP"
 # ad-hoc signature: Developer ID signing/notarization requires distributor credentials.
 while IFS= read -r -d '' f; do

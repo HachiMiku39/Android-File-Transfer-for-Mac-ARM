@@ -1,0 +1,16 @@
+Android File Transfer ARM — app icon
+
+Created using the built-in image_gen tool via the imagegen skill.
+Concept: a green robot with opposing transfer arrows on a dark macOS icon tile.
+The pixels outside the rounded tile are transparent.
+Master image: AppIcon.png (1024 × 1024; mechanically resized from the generated master)
+
+Final generation prompt:
+Use case: logo-brand.
+Asset type: final macOS app icon for an independent Android USB file transfer application named Android File Transfer ARM.
+Primary request: Design one polished, original, memorable icon that combines a friendly minimal green robot with two bold opposing file-transfer arrows.
+Style: premium macOS utility app icon, clean sculpted geometric forms, tasteful soft 3D depth and restrained highlights, high contrast and crisp edges, readable at 32 pixels.
+Composition: one front-facing centered rounded-square icon tile, approximately 84% of a square canvas with balanced margins. Deep graphite/navy rounded square tile. A simplified original mint-green robot head with two short antennae and two calm circular eyes in the upper-middle; below it two substantial horizontal transfer arrows, one pointing right and one pointing left, using mint green and cool white. Integrate the three shapes into a single coherent mark. Very simple silhouette, generous negative space. No tiny circuit details.
+Background: actual transparent pixels outside the rounded-square tile. The tile itself is opaque. No ground plane or cast shadow outside the tile.
+Text: none.
+Constraints: exactly one app icon, square image, no letters, no wordmark, no border frame around the artwork, no mockup device, no perspective tilt, no Apple logo, no Google wordmark, do not reproduce the Google Android File Transfer fist/USB icon. Avoid visual clutter, gradients with banding, and ornamental details. Deliver a finished high-resolution icon ready for a macOS .icns resource.

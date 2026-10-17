@@ -1,3 +1,5 @@
+<img src="Resources/AppIcon.png" width="128" height="128" alt="Android File Transfer ARM app icon">
+
 # Android File Transfer for Mac ARM
 
 原生 Apple Silicon Android USB 文件传输工具，集成 **ADB Shell / Fastboot**。

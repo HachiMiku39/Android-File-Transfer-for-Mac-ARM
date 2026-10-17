@@ -5,6 +5,7 @@
 <key>CFBundleIdentifier</key><string>io.github.hachimiku39.android-file-transfer-arm</string>
 <key>CFBundleName</key><string>Android File Transfer ARM</string>
 <key>CFBundleDisplayName</key><string>Android File Transfer ARM</string>
+<key>CFBundleIconFile</key><string>AppIcon</string>
 <key>CFBundlePackageType</key><string>APPL</string>
 <key>CFBundleShortVersionString</key><string>0.1.0</string>
 <key>CFBundleVersion</key><string>1</string>
